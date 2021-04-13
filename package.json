@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "prestart": "tsc",
+    "build": "tsc",
     "start": "node build/app.js"
   },
   "author": "",
