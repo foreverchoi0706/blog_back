@@ -1,11 +1,18 @@
 import express from "express";
+import cors from "cors";
+import bodyParser from "body-parser";
 //routes
 import home from "./routes/home";
-const PORT = process.env.PORT || 8080;
+import post from "./routes/post";
 
+const PORT = process.env.PORT || 3000;
 const app = express();
 
-app.use(home);
+//middleware
+app.use(cors());
+//routes
+app.use("/", home);
+app.use("/post", post);
 
 app.listen(PORT, () => {
   console.log(`app is running on http://localhost:${PORT}`);

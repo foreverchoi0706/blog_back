@@ -1,7 +1,4 @@
-import pgPromise, { IMain, IDatabase } from "pg-promise";
-
-const pgp: IMain = pgPromise();
-
-const db : IDatabase<any> = pgp("postgres://localhost:5432");
+const pgp = require("pg-promise")();
+const db = pgp("postgres://postgres:6007@localhost:5432/postgres");
 
 export default db;
