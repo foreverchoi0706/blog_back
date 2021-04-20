@@ -1,11 +1,10 @@
 import express from "express";
 import cors from "cors";
-import bodyParser from "body-parser";
 //routes
 import home from "./routes/home";
 import post from "./routes/post";
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 const app = express();
 
 //middleware
