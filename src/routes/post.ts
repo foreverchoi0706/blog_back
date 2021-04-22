@@ -24,15 +24,27 @@ const upload: multer.Multer = multer({
   },
 });
 
-post.get("/postList", async (req: express.Request, res: express.Response) => {
+post.get("/tagList", async (req: express.Request, res: express.Response) => {
   const { area } = req.query;
-  const query = `SELECT * FROM public.post WHERE area='${area}';`;
+  const query = `SELECT tag FROM public.post WHERE area='${area}' GROUP BY tag ORDER BY tag;`;
   const result = await db
     .any(query)
     .then((result: any) => result)
     .catch((error: any) => console.log(error));
   console.log(query);
+  console.log(result);
+  console.log(LINE);
+  res.header(200).json(result);
+});
 
+post.get("/postList", async (req: express.Request, res: express.Response) => {
+  const { tag } = req.query;
+  const query = `SELECT id,title FROM public.post WHERE tag='${tag}' ORDER BY title;`;
+  const result = await db
+    .any(query)
+    .then((result: any) => result)
+    .catch((error: any) => console.log(error));
+  console.log(query);
   console.log(result);
   console.log(LINE);
   res.header(200).json(result);
