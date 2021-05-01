@@ -56,7 +56,7 @@ post.get("/read", async (req: express.Request, res: express.Response) => {
   const result = await db
     .one(query)
     .then((result: any) => result)
-    .catch((error: any) => console.log(error));
+    .catch((error : Error) => console.log(error));
   console.log(result);
   console.log(LINE);
   res.header(200).json(result);
