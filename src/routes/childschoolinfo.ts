@@ -6,8 +6,6 @@ const childschoolinfo = express.Router();
 
 const baseURL = "https://e-childschoolinfo.moe.go.kr/api/notice";
 
-const key = "8642a281009d4d2ba8f54359d63eb348";
-
 const instance: AxiosInstance = axios.create({
   baseURL,
   params: {
@@ -18,7 +16,7 @@ const instance: AxiosInstance = axios.create({
 childschoolinfo.get(
   "/basicInfo",
   (req: express.Request, res: express.Response) => {
-    console.log("basicInfo");
+    console.log(21, "basicInfo");
     instance
       .get("basicInfo.do", {
         params: {
