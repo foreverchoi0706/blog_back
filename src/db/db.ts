@@ -1,5 +1,7 @@
+import config from "../config";
+
 const pgp = require("pg-promise")();
-// const db = pgp("postgres://postgres:6007@localhost:5432/postgres");
-const db = pgp("postgres://postgres:6007@52.78.180.169:5432/postgres");
+
+const db = pgp(config.db.address);
 
 export default db;

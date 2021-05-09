@@ -1,4 +1,5 @@
 import express from "express";
+import config from "../config";
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 
 const childschoolinfo = express.Router();
@@ -10,7 +11,7 @@ const key = "8642a281009d4d2ba8f54359d63eb348";
 const instance: AxiosInstance = axios.create({
   baseURL,
   params: {
-    key,
+    key: config.api.key,
   },
 });
 
