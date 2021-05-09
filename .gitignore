@@ -1,4 +1,4 @@
 node_modules
 build
 uploads
-src/config.js
+src/config.ts
