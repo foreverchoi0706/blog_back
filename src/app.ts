@@ -1,12 +1,12 @@
-import express from "express";
+import express, { Express } from "express";
 import cors from "cors";
 //routes
 import home from "./routes/home";
 import post from "./routes/post";
 import childschoolinfo from "./routes/childschoolinfo";
 
-const PORT = process.env.PORT || 3000;
-const app = express();
+const PORT: String | Number = process.env.PORT || 3000;
+const app: Express = express();
 
 //middleware
 app.use(cors());
@@ -16,5 +16,5 @@ app.use("/post", post);
 app.use("/childschoolinfo", childschoolinfo);
 
 app.listen(PORT, () => {
-  console.log(`app is running on http://localhost:${PORT}`);
+  console.log(`우리아이 is running on http://localhost:${PORT}`);
 });

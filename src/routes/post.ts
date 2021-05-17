@@ -1,12 +1,9 @@
-import express from "express";
+import express,{Router} from "express";
 import multer from "multer";
 //db
 import db from "../db/db";
 
-const post = express.Router();
-
-const LINE =
-  "--------------------------------------------------------------------------------------------------------------";
+const post : Router = express.Router();
 
 const storage: multer.StorageEngine = multer.diskStorage({
   destination: function (_, __, cb) {
@@ -31,9 +28,6 @@ post.get("/tagList", async (req: express.Request, res: express.Response) => {
     .any(query)
     .then((result: any) => result)
     .catch((error: any) => console.log(error));
-  console.log(query);
-  console.log(result);
-  console.log(LINE);
   res.header(200).json(result);
 });
 
@@ -44,9 +38,6 @@ post.get("/postList", async (req: express.Request, res: express.Response) => {
     .any(query)
     .then((result: any) => result)
     .catch((error: any) => console.log(error));
-  console.log(query);
-  console.log(result);
-  console.log(LINE);
   res.header(200).json(result);
 });
 
@@ -56,9 +47,8 @@ post.get("/read", async (req: express.Request, res: express.Response) => {
   const result = await db
     .one(query)
     .then((result: any) => result)
-    .catch((error : Error) => console.log(error));
-  console.log(result);
-  console.log(LINE);
+    .catch((error: Error) => console.log(error));
+
   res.header(200).json(result);
 });
 
@@ -66,15 +56,12 @@ post.post(
   "/create",
   upload.array("images"),
   async (req: express.Request, res: express.Response) => {
-    console.log(LINE);
     const { title, area, tag, content } = req.body;
     const query = `INSERT INTO public.post (id,title,area,tag,content) VALUES (DEFAULT,'${title}','${area}','${tag}','${content}');`;
     const result = await db
       .one(query)
       .then((result: any) => result)
       .catch((error: any) => console.log(error));
-    console.log(result);
-    console.log(LINE);
     res.header(200).json("post");
   }
 );
