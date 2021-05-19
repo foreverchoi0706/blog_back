@@ -1,13 +1,13 @@
 {
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "우리아이",
-            "preLaunchTask": "tsc: build - tsconfig.json",
-            "program": "${workspaceFolder}/src/app.ts",
-            "outFiles": ["${workspaceFolder}/build/**/*.js"]
-        }
-    ]
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "uriai_back",
+      "preLaunchTask": "npm: build",
+      "program": "${workspaceFolder}/src/app.ts",
+      "outFiles": ["${workspaceFolder}/build/**/*.js"]
+    }
+  ]
 }

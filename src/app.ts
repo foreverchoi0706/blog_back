@@ -2,6 +2,7 @@ import express, { Express } from "express";
 import cors from "cors";
 //routes
 import home from "./routes/home";
+import user from "./routes/user";
 import post from "./routes/post";
 import childschoolinfo from "./routes/childschoolinfo";
 
@@ -10,8 +11,11 @@ const app: Express = express();
 
 //middleware
 app.use(cors());
+app.use(express.static('public'));
+
 //routes
 app.use("/", home);
+app.use("/user", user);
 app.use("/post", post);
 app.use("/childschoolinfo", childschoolinfo);
 
