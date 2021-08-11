@@ -1,6 +1,8 @@
 import config from "../config";
 
-const pgp = require("pg-promise")();
+import pgPromise from "pg-promise";
+
+const pgp = pgPromise();
 
 const db = pgp(config.db.address);
 

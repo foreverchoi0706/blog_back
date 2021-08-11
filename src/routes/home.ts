@@ -1,16 +1,23 @@
-import express from "express";
+import { Router, Response, NextFunction } from "express";
 import axios from "axios";
+const home = Router();
 
-const home = express.Router();
-
-home.get("/", async (_, res: express.Response) => {
-  res.header(200).json("welcome server");
+home.get("/", async (_, __, next: NextFunction) => {
+  console.log("test1");
+  next();
 });
 
-home.get("/getNickname", async (_, res: express.Response) => {
-  const { data } = await axios.get("https://nickname.hwanmoo.kr/?format=text&count=1");
-  res.header(200).json({
-    nickname: data
+home.get("/", async (_, res: Response) => {
+  console.log("test2");
+  res.status(200).send("next end");
+});
+
+home.get("/getNickname", async (_, res: Response) => {
+  const { data } = await axios.get(
+    "https://nickname.hwanmoo.kr/?format=text&count=1"
+  );
+  res.status(200).json({
+    nickname: data,
   });
 });
 

@@ -8,6 +8,6 @@ RUN npm install
 
 RUN npm run build
 
-EXPOSE 5000:8080
+EXPOSE 3003:3003
 
 CMD [ "npm", "run", "start" ]
