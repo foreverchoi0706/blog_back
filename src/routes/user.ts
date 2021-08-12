@@ -1,6 +1,7 @@
 import { Router, Request, Response, NextFunction } from "express";
 import multer, { Multer, StorageEngine } from "multer";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 //utils
 import { executeQuery, chainQuery } from "../utils/common";
 
@@ -38,25 +39,27 @@ user.post("/signIn", (req: Request, res: Response, next: NextFunction) => {
   const { id, pw } = req.body;
   const query = `select pw from test.users u where u.id = '${id}'`;
   chainQuery(query, res).then((value: any) => {
+    if (!value.length) res.status(200).end("ID 틀림");
     const compare = bcrypt.compareSync(String(pw), value[0].pw);
     if (compare) {
       next();
     } else {
-      res.status(200).send("비번 틀림");
+      res.status(200).send("PW 틀림");
     }
   });
-});
-
-//id중복체크
-user.get("duplicated", (req: Request, res: Response, next: NextFunction) => {
-  const query = `select pw from test.users u where u.id = '${req.query.id}'`;
-  executeQuery(query, res);
 });
 
 //로그인(jwt)
 user.post("/signIn", (req: Request, res: Response) => {
   console.log(req.body);
-  res.send("로그인성공");
+  const token = jwt.sign(String(req.body.id), "key");
+  res.cookie("token", token).send("로그인 성공");
+});
+
+//id중복체크
+user.get("duplicated", (req: Request, res: Response) => {
+  const query = `select pw from test.users u where u.id = '${req.query.id}'`;
+  executeQuery(query, res);
 });
 
 user.patch(

@@ -1,7 +1,14 @@
-import pgPromise from "pg-promise";
 import { Response } from "express";
 //db
 import db from "../db/db";
+
+const getMessage = (message: string, query: string): string => {
+  return `
+  ============================================================
+  ${message}\n
+  query :: ${query}
+  ============================================================`;
+};
 
 export const executeQuery = (query: string, res: Response): void => {
   db.query(query)
@@ -9,11 +16,7 @@ export const executeQuery = (query: string, res: Response): void => {
       res.status(200).json(value);
     })
     .catch((reason: Error) => {
-      const errorMessage: string = `
-      ============================================================
-      ${reason.message}\n
-      query :: ${query}
-      ============================================================`;
+      const errorMessage: string = getMessage(reason.message, query);
       console.error(errorMessage);
       res.status(500).send(errorMessage);
     });
@@ -26,11 +29,7 @@ export const chainQuery = (query: string, res: Response) => {
         resolve(value);
       })
       .catch((reason: Error) => {
-        const errorMessage: string = `
-    ============================================================
-    ${reason.message}\n
-    query :: ${query}
-    ============================================================`;
+        const errorMessage: string = getMessage(reason.message, query);
         console.error(errorMessage);
         reject(errorMessage);
       });
