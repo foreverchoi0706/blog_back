@@ -35,19 +35,22 @@ user.post("/signUp", (req: Request, res: Response) => {
 });
 
 //로그인(인증)
-user.post("/signIn", (req: Request, res: Response, next: NextFunction) => {
-  const { id, pw } = req.body;
-  const query = `select pw from test.users u where u.id = '${id}'`;
-  chainQuery(query, res).then((value: any) => {
-    if (!value.length) res.status(200).end("ID 틀림");
-    const compare = bcrypt.compareSync(String(pw), value[0].pw);
-    if (compare) {
-      next();
-    } else {
-      res.status(200).send("PW 틀림");
-    }
-  });
-});
+user.post(
+  "/signIn",
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { id, pw } = req.body;
+
+    const query = `select pw from test.users u where u.id = '${id}'`;
+
+    const result = await chainQuery(query);
+
+    if (!result.length) res.status(200).end("ID 틀림");
+
+    const compare = bcrypt.compareSync(String(pw), result[0].pw);
+
+    compare ? next() : res.status(200).send("PW 틀림");
+  }
+);
 
 //로그인(jwt)
 user.post("/signIn", (req: Request, res: Response) => {
@@ -57,8 +60,8 @@ user.post("/signIn", (req: Request, res: Response) => {
 });
 
 //id중복체크
-user.get("duplicated", (req: Request, res: Response) => {
-  const query = `select pw from test.users u where u.id = '${req.query.id}'`;
+user.get("/duplicated", (req: Request, res: Response) => {
+  const query = `select id from test.users u where u.id = '${req.query.id}'`;
   executeQuery(query, res);
 });
 

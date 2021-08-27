@@ -13,7 +13,9 @@ import user from "./routes/user";
 import post from "./routes/post";
 import childschoolinfo from "./routes/childschoolinfo";
 
-const PORT: String | Number = process.env.PORT || 3003;
+const PORT: number = 3003;
+const HOST: string = "localhost";
+
 const app: Express = express();
 
 //middleware
@@ -30,6 +32,6 @@ app.use("/user", user);
 app.use("/post", post);
 app.use("/childschoolinfo", childschoolinfo);
 
-app.listen(PORT, () =>
+app.listen(PORT, HOST, () =>
   console.log(`server is running on http://localhost:${PORT}`)
 );
