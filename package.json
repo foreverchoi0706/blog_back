@@ -1,13 +1,13 @@
 {
-  "name": "uriai_back",
+  "name": "puddy_back",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "puddy backend server",
+  "main": "",
   "scripts": {
     "start": "nodemon --watch '*.ts' --exec 'ts-node' src/server.ts"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "foreverchoi",
+  "license": "MIT",
   "dependencies": {
     "@types/bcrypt": "^5.0.0",
     "@types/body-parser": "^1.19.1",
