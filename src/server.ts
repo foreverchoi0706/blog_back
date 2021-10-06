@@ -12,6 +12,7 @@ import home from "./routes/home";
 import user from "./routes/user";
 import post from "./routes/post";
 import childschoolinfo from "./routes/childschoolinfo";
+import map from "./routes/map";
 
 const PORT: number = 3003;
 const HOST: string = "localhost";
@@ -25,12 +26,14 @@ app.use(json());
 app.use(urlencoded({ extended: true }));
 //app.use(bodyParser()); deprecated
 app.use(cookieParser());
+app.set('view engine', 'ejs');
 
 //routes
 app.use("/", home);
 app.use("/user", user);
 app.use("/post", post);
 app.use("/childschoolinfo", childschoolinfo);
+app.use("/map",map);
 
 app.listen(PORT, HOST, () =>
   console.log(`server is running on http://localhost:${PORT}`)
