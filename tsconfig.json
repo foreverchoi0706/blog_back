@@ -1,6 +1,9 @@
 {
   "compilerOptions": {
-      "esModuleInterop": true
+      "esModuleInterop": true,
+      "module": "Commonjs",
+      "rootDir": "src",
+      "outDir": "dist",
   },
   "files": ["src/server.ts"]
 }

@@ -36,5 +36,5 @@ app.use("/childschoolinfo", childschoolinfo);
 app.use("/map",map);
 
 app.listen(PORT, HOST, () =>
-  console.log(`server is running on http://localhost:${PORT}`)
+  console.log(`server is running on http://0.0.0.0:${PORT}`)
 );

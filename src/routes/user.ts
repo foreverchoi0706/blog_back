@@ -1,6 +1,6 @@
 import { Router, Request, Response, NextFunction } from "express";
 import multer, { Multer, StorageEngine } from "multer";
-import bcrypt from "bcrypt";
+import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 //utils
 import { executeQuery, chainQuery } from "../utils/common";
@@ -28,7 +28,7 @@ user.get("/", (_, res: Response) => {
 //회원가입
 user.post("/signUp", (req: Request, res: Response) => {
   const { pw } = req.body;
-  const hash: string = bcrypt.hashSync(String(pw), 10);
+  const hash: string = bcryptjs.hashSync(String(pw), 10);
   req.body.pw = hash;
   const query = `select test.ins_user('${JSON.stringify(req.body)}')`;
   executeQuery(query, res);
@@ -46,7 +46,7 @@ user.post(
 
     if (!result.length) res.status(200).end("ID 틀림");
 
-    const compare = bcrypt.compareSync(String(pw), result[0].pw);
+    const compare = bcryptjs.compareSync(String(pw), result[0].pw);
 
     compare ? next() : res.status(200).send("PW 틀림");
   }
