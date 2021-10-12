@@ -14,7 +14,7 @@ import post from "./routes/post";
 import childschoolinfo from "./routes/childschoolinfo";
 import map from "./routes/map";
 
-const PORT: number = 3003;
+const PORT: number = 3000;
 const HOST: string = "localhost";
 
 const app: Express = express();
@@ -36,5 +36,5 @@ app.use("/childschoolinfo", childschoolinfo);
 app.use("/map",map);
 
 app.listen(PORT, HOST, () =>
-  console.log(`server is running on http://0.0.0.0:${PORT}`)
+  console.log(`server is running on http://localhost:${PORT}`)
 );
