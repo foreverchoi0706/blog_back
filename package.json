@@ -2,7 +2,6 @@
   "name": "puddy_back",
   "version": "1.0.0",
   "description": "puddy backend server",
-  "main": "",
   "scripts": {
     "prestart": "tsc",
     "start": "node dist/server.js",
