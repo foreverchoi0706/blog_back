@@ -68,7 +68,7 @@ user.get("/duplicated", (req: Request, res: Response) => {
 user.patch(
   "/profile",
   userMulter.single("file"),
-  (req: Request, res: Response) => {}
+  (req: Request, res: Response) => { }
 );
 
 export default user;

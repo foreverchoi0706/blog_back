@@ -1,9 +1,11 @@
-import express,{Router} from "express";
+/**@lib */
+import express, { Router, Request, Response } from "express";
 import multer from "multer";
-//db
 import db from "../db/db";
+/**@utils */
+import { executeQuery } from "../utils/common";
 
-const post : Router = express.Router();
+const post: Router = express.Router();
 
 const storage: multer.StorageEngine = multer.diskStorage({
   destination: function (_, __, cb) {
@@ -21,61 +23,45 @@ const upload: multer.Multer = multer({
   },
 });
 
-post.get("/tagList", async (req: express.Request, res: express.Response) => {
-  const { area } = req.query;
-  const query = `SELECT tag FROM public.post WHERE area='${area}' GROUP BY tag ORDER BY tag;`;
-  const result = await db
-    .any(query)
-    .then((result: any) => result)
-    .catch((error: any) => console.log(error));
-  res.header(200).json(result);
+post.get("/list", async (_, res: Response) => {
+  const query = `
+  SELECT 
+    id, title, tags, category_id, thumbnail_id, to_char(created_at,'YYYY-MM-DD') as created_at, to_char(updated_at,'YYYY-MM-DD') as updated_at
+  FROM 
+    blog.post;`;
+  executeQuery(query, res, "manyOrNone");
 });
 
-post.get("/postList", async (req: express.Request, res: express.Response) => {
-  const { tag } = req.query;
-  const query = `SELECT id,title FROM public.post WHERE tag='${tag}' ORDER BY title;`;
-  const result = await db
-    .any(query)
-    .then((result: any) => result)
-    .catch((error: any) => console.log(error));
-  res.header(200).json(result);
-});
-
-post.get("/read", async (req: express.Request, res: express.Response) => {
-  const { id } = req.query;
-  const query = `SELECT * FROM public.post WHERE id=${id};`;
-  const result = await db
-    .one(query)
-    .then((result: any) => result)
-    .catch((error: Error) => console.log(error));
-
-  res.header(200).json(result);
+post.get("/detail/:id", async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const query = `
+  SELECT 
+    id, title, contents, tags, category_id, thumbnail_id, to_char(created_at,'YYYY-MM-DD') as created_at, to_char(updated_at,'YYYY-MM-DD') as updated_at
+  FROM 
+    blog.post p
+  WHERE 
+    p.id = ${id};`;
+  executeQuery(query, res, "one");
 });
 
 post.post(
   "/create",
-  upload.array("images"),
-  async (req: express.Request, res: express.Response) => {
-    const { title, area, tag, content } = req.body;
-    const query = `INSERT INTO public.post (id,title,area,tag,content) VALUES (DEFAULT,'${title}','${area}','${tag}','${content}');`;
-    const result = await db
-      .one(query)
-      .then((result: any) => result)
-      .catch((error: any) => console.log(error));
-    res.header(200).json("post");
+  async (req: Request, res: Response) => {
+    const { post } = req.body;
+
+    const { title, contents, tags } = JSON.parse(post);
+
+
+
+    const query = `INSERT INTO blog.post
+    (title, contents, tags, category_id, comment_id, thumbnail_id, created_at, updated_at)
+    VALUES('${title}', '${contents.replace("'", "\'")}', '{ "tags" : "${tags}" }', 0, 0, 0, now(), now());`;
+    executeQuery(query, res, "none");
   }
 );
 
-post.put(
-  "/modify",
-  upload.array("images"),
-  (req: express.Request, res: express.Response) => {
-    res.header(200).json("modify");
-  }
-);
-
-post.delete("/delete", (req: express.Request, res: express.Response) => {
-  res.header(200).json("delete");
+post.post("/thumbnail", upload.single("thumbnail"), async (req: Request, res: Response) => {
+  console.log("file::", req.file);
 });
 
 export default post;

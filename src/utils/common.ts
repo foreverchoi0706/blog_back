@@ -1,4 +1,5 @@
 import { Response } from "express";
+import camelize from "camelize";
 //db
 import db from "../db/db";
 
@@ -22,10 +23,11 @@ const getMessage = (message: string, query: string): string => {
 //     });
 // };
 
-export const executeQuery = (query: string, res: Response): void => {
-  db.query(query)
+export const executeQuery = (query: string, res: Response, method: string = "query"): void => {
+  db[method](query)
     .then((value: any) => {
-      res.status(200).json(value);
+      console.log("value::",value);
+      res.status(200).json(camelize(value));
     })
     .catch((reason: Error) => {
       const errorMessage: string = getMessage(reason.message, query);
