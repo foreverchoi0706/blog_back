@@ -1,0 +1,9 @@
+ node {
+     stage('Clone repository') {
+         checkout scm
+     }
+
+     stage('Build image') {
+         app = docker.build("foreverchoi0706/puddy_back:latest") 
+     }
+}
