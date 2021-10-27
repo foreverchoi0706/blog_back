@@ -11,22 +11,9 @@ const getMessage = (message: string, query: string): string => {
   ============================================================`;
 };
 
-// export const executeQuery = (query: string, res: Response): void => {
-//   db.query(query)
-//     .then((value: any) => {
-//       res.status(200).json(value);
-//     })
-//     .catch((reason: Error) => {
-//       const errorMessage: string = getMessage(reason.message, query);
-//       console.error(errorMessage);
-//       res.status(500).send(errorMessage);
-//     });
-// };
-
 export const executeQuery = (query: string, res: Response, method: string = "query"): void => {
   db[method](query)
     .then((value: any) => {
-      console.log("value::",value);
       res.status(200).json(camelize(value));
     })
     .catch((reason: Error) => {
