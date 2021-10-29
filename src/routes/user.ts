@@ -1,24 +1,10 @@
 import { Router, Request, Response, NextFunction } from "express";
-import multer, { Multer, StorageEngine } from "multer";
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 //utils
 import { executeQuery, chainQuery } from "../utils/common";
 
 const user: Router = Router();
-
-const storage: StorageEngine = multer.diskStorage({
-  destination: function (_, __, callback) {
-    callback(null, "public/uploads/"); // callback 콜백함수를 통해 전송된 파일 저장 디렉토리 설정
-  },
-  filename: function (_, file, callback) {
-    callback(null, file.originalname); // callback 콜백함수를 통해 전송된 파일 이름 설정
-  },
-});
-
-const userMulter: Multer = multer({
-  storage,
-});
 
 user.get("/", (_, res: Response) => {
   const query = `select * from test.users u`;
@@ -67,7 +53,6 @@ user.get("/duplicated", (req: Request, res: Response) => {
 
 user.patch(
   "/profile",
-  userMulter.single("file"),
   (req: Request, res: Response) => { }
 );
 

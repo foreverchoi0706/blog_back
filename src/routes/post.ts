@@ -1,7 +1,7 @@
 /**@lib */
 import express, { Router, Request, Response } from "express";
-import multer from "multer";
-const upload = multer({ dest: "upload" });
+import formidable from 'formidable';
+import _upload from "../_upload";
 /**@utils */
 import { executeQuery } from "../utils/common";
 
@@ -41,10 +41,22 @@ post.post(
   }
 );
 
-post.post("/thumbnail", upload.single("img"), (req: Request, res: Response) => {
+post.post("/thumbnail",_upload.single("img"), (req: Request, res: Response) => {
   console.log(JSON.stringify(req.body));
   console.log("file::", req.file);
   console.log("files::", req.files);
+
+
+  const form = formidable({ multiples: true });
+  form.parse(req, (err, fields, files) => {
+    if (err) {
+      console.log(err);
+      
+      return;
+    }
+    console.log(fields);
+    console.log(files);
+  });
   res.end();
 });
 
