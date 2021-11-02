@@ -4,6 +4,6 @@
      }
 
      stage('Build image') {
-         app = docker.build("foreverchoi0706/puddy_back:latest") 
+         app = docker.build("foreverchoi0706/blog_back:latest") 
      }
 }

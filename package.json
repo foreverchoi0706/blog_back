@@ -1,7 +1,7 @@
 {
-  "name": "puddy_back",
+  "name": "blog_back",
   "version": "1.0.0",
-  "description": "puddy backend server",
+  "description": "blog backend server",
   "scripts": {
     "prestart": "tsc",
     "start": "node dist/server.js",
