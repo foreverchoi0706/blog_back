@@ -1,14 +1,11 @@
 /**@lib */
 import express, {
   Express,
-  static as applyStatic,
   json,
   urlencoded,
 } from "express";
 import cors from "cors";
-import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
-import formData from 'express-form-data';
 /**@routes */
 import home from "./routes/home";
 import user from "./routes/user";
@@ -22,11 +19,9 @@ const app: Express = express();
 
 //middleware
 app.use(cors());
-app.use(applyStatic("public"));
+app.use(express.static("public"));
 app.use(urlencoded({ extended: true }));
 app.use(json());
-app.use(formData.parse());
-// app.use(bodyParser());
 app.use(cookieParser());
 app.set('view engine', 'ejs');
 
@@ -37,6 +32,4 @@ app.use("/post", post);
 app.use("/childschoolinfo", childschoolinfo);
 app.use("/map", map);
 
-app.listen(PORT, () =>
-  console.log(`server is running on http://localhost:${PORT}`)
-);
+app.listen(PORT, () => console.log(`server is running on http://localhost:${PORT}`));

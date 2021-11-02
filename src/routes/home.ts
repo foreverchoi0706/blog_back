@@ -3,13 +3,12 @@ import axios from "axios";
 const home = Router();
 
 home.get("/", async (_, __, next: NextFunction) => {
-  console.log("test1");
   next();
 });
 
 home.get("/", async (_, res: Response) => {
   console.log("test2");
-  res.status(200).send("next end");
+  res.status(200).send("end");
 });
 
 home.get("/getNickname", async (_, res: Response) => {

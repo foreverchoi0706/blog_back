@@ -23,9 +23,9 @@ export const executeQuery = (query: string, res: Response, method: string = "que
     });
 };
 
-export const chainQuery = (query: string): Promise<any> => {
+export const chainQuery = (query: string, method: string = "query"): Promise<any> => {
   return new Promise((resolve, reject) => {
-    db.query(query)
+    db[method](query)
       .then((value: any) => {
         resolve(value);
       })
