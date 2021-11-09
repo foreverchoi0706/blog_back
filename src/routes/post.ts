@@ -24,7 +24,13 @@ router.get("/detail/:id", async (req: Request, res: Response) => {
 
 router.post("/", async (req: Request, res: Response) => {
   const { title, contents, tags, thumbnailId } = req.body;
-  const query = `INSERT INTO blog.post (title, contents, tags, category_id, comment_id, thumbnail_id, created_at, updated_at) VALUES('${title.replace(/'/g, "''")}', '${contents.replace(/'/g, "''")}', '{ "tags" : "${tags}" }', 0, 0, ${thumbnailId}, now(), now());`;
+  const query = `INSERT INTO blog.post (title, contents, tags, category_id, thumbnail_id, created_at, updated_at) VALUES('${title.replace(/'/g, "''")}', '${contents.replace(/'/g, "''")}', '{ "tags" : "${tags}" }', 0, ${thumbnailId}, now(), now());`;
+  executeQuery(query, res, "none");
+});
+
+router.patch("/", async (req: Request, res: Response) => {
+  const { id, title, contents, tags, thumbnailId } = req.body;
+  const query = `UPDATE blog.post SET title='${title}', contents='${contents}', tags='{ "tags" : "${tags}" }', category_id=0, thumbnail_id=${thumbnailId}, created_at=now(), updated_at=now() WHERE id=${id};`;
   executeQuery(query, res, "none");
 });
 
